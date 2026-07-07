@@ -1,0 +1,326 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Dark mode is class-based (next-themes toggles `.dark` on <html>). */
+@custom-variant dark (&:is(.dark *));
+
+/* ────────────────────────────────────────────────────────────────────────
+   Vivora "Aurora" theme — teal → emerald. shadcn semantic tokens.
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --radius: 0.75rem;
+
+  --background: #f6fbfa;
+  --foreground: #0b1a17;
+  --card: #ffffff;
+  --card-foreground: #0b1a17;
+  --popover: #ffffff;
+  --popover-foreground: #0b1a17;
+  --primary: #0d9488;              /* teal-600 */
+  --primary-foreground: #f0fdfa;
+  --secondary: #e6f4f1;
+  --secondary-foreground: #0b1a17;
+  --muted: #eaf3f1;
+  --muted-foreground: #4b615c;
+  --accent: #d1fae5;              /* emerald-100 */
+  --accent-foreground: #064e3b;
+  --destructive: #e11d48;
+  --destructive-foreground: #fff1f2;
+  --border: #d7e6e2;
+  --input: #d7e6e2;
+  --ring: #14b8a6;
+
+  --chart-1: #14b8a6;
+  --chart-2: #10b981;
+  --chart-3: #22d3ee;
+  --chart-4: #34d399;
+  --chart-5: #0ea5e9;
+}
+
+.dark {
+  --background: #070d0c;
+  --foreground: #e8f5f1;
+  --card: #0c1614;
+  --card-foreground: #e8f5f1;
+  --popover: #0c1614;
+  --popover-foreground: #e8f5f1;
+  --primary: #2dd4bf;             /* teal-400 (brighter for dark) */
+  --primary-foreground: #04110f;
+  --secondary: #16211e;
+  --secondary-foreground: #e8f5f1;
+  --muted: #16211e;
+  --muted-foreground: #94b5ad;
+  --accent: #10241f;
+  --accent-foreground: #6ee7b7;
+  --destructive: #fb7185;
+  --destructive-foreground: #1a0508;
+  --border: #1e2c28;
+  --input: #1e2c28;
+  --ring: #2dd4bf;
+
+  --chart-1: #2dd4bf;
+  --chart-2: #34d399;
+  --chart-3: #22d3ee;
+  --chart-4: #10b981;
+  --chart-5: #38bdf8;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Theme mapping — expose tokens to Tailwind + legacy numeric scales,
+   shadows, fonts, easing and animations used across the app.
+   ──────────────────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Legacy numeric scales (kept so existing markup re-themes to Aurora). */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+  --color-primary-950: #042f2e;
+
+  --color-accent-50: #ecfdf5;
+  --color-accent-100: #d1fae5;
+  --color-accent-200: #a7f3d0;
+  --color-accent-300: #6ee7b7;
+  --color-accent-400: #34d399;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065f46;
+  --color-accent-900: #064e3b;
+  --color-accent-950: #022c22;
+
+  --color-surface-500: #2d3b38;
+  --color-surface-600: #24302d;
+  --color-surface-700: #1a2422;
+  --color-surface-800: #111917;
+  --color-surface-900: #0a0f0e;
+  --color-surface-950: #050a09;
+
+  --color-neon-teal: #14b8a6;
+  --color-neon-emerald: #10b981;
+  --color-neon-cyan: #22d3ee;
+
+  --shadow-glow-sm: 0 0 10px rgba(20, 184, 166, 0.35);
+  --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.45);
+  --shadow-glow-lg: 0 0 40px rgba(20, 184, 166, 0.55);
+  --shadow-glow-emerald: 0 0 20px rgba(16, 185, 129, 0.45);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-slide-up: slideUp 0.4s ease-out forwards;
+  --animate-slide-in-right: slideInRight 0.4s ease-out forwards;
+  --animate-scale-in: scaleIn 0.3s ease-out forwards;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-waveform: waveform 1.2s ease-in-out infinite;
+  --animate-aurora: aurora 8s ease infinite;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Custom utilities — must be declared with @utility (not a plain class in
+   @layer components) so other rules can reference them via @apply.
+   ──────────────────────────────────────────────────────────────────────── */
+@utility glass-card {
+  @apply relative rounded-2xl overflow-hidden bg-card/70 backdrop-blur-xl border border-border shadow-[var(--shadow-glass)];
+}
+
+@utility badge {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Base
+   ──────────────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, color-mix(in oklab, var(--primary) 12%, transparent) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, color-mix(in oklab, var(--accent-foreground) 8%, transparent) 0%, transparent 55%);
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-muted rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-primary/60; }
+  ::selection { @apply bg-primary/30 text-foreground; }
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Legacy component classes (re-themed to Aurora). New code should prefer the
+   shadcn primitives in components/ui, but these keep the not-yet-migrated
+   views consistent during the transition.
+   ──────────────────────────────────────────────────────────────────────── */
+@layer components {
+  /* Legacy button classes — retained (re-themed) so not-yet-migrated views
+     keep working. New code should use <Button> from components/ui/button. */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-primary-foreground
+           bg-linear-to-r from-primary-600 to-accent-600 hover:from-primary-500 hover:to-accent-500
+           shadow-[var(--shadow-glow-sm)] hover:shadow-[var(--shadow-glow)]
+           transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none active:scale-95;
+  }
+  .btn-secondary {
+    @apply relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium
+           bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/50
+           text-secondary-foreground transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed active:scale-95;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-muted-foreground
+           hover:text-foreground hover:bg-accent transition-all duration-200 active:scale-95;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium
+           bg-destructive/15 hover:bg-destructive/30 text-destructive border border-destructive/20 hover:border-destructive/50 transition-all duration-200;
+  }
+  .btn-icon {
+    @apply w-10 h-10 flex items-center justify-center rounded-xl bg-secondary hover:bg-secondary/80
+           border border-border hover:border-primary/40 text-muted-foreground hover:text-foreground transition-all duration-200 active:scale-95;
+  }
+  .avatar-ring { @apply ring-2 ring-primary/60 ring-offset-2 ring-offset-background; }
+  .skeleton { @apply rounded-lg bg-muted animate-pulse; }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:border-primary/40 hover:shadow-[var(--shadow-glow-sm)];
+  }
+  .card { @apply glass-card p-6; }
+  .card-glow { @apply glass-card p-6; }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl bg-secondary/60 border border-input text-foreground placeholder:text-muted-foreground
+           focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-primary/50 transition-all duration-200;
+  }
+
+  .divider { @apply w-full h-px bg-linear-to-r from-transparent via-border to-transparent; }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-primary-400 to-accent-400;
+  }
+  .gradient-text-gold {
+    @apply bg-clip-text text-transparent bg-linear-to-r from-accent-300 to-primary-300;
+  }
+
+  .badge-purple { @apply badge bg-primary/15 text-primary border border-primary/30; }
+  .badge-blue { @apply badge bg-accent-500/15 text-accent-600 dark:text-accent-300 border border-accent-500/30; }
+  .badge-green { @apply badge bg-accent-500/20 text-accent-700 dark:text-accent-300 border border-accent-500/30; }
+  .badge-amber { @apply badge bg-amber-500/20 text-amber-600 dark:text-amber-300 border border-amber-500/30; }
+  .badge-red { @apply badge bg-destructive/15 text-destructive border border-destructive/30; }
+
+  .feature-card {
+    @apply glass-card p-6 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[var(--shadow-glow-sm)];
+  }
+
+  .waveform-bar {
+    @apply rounded-full bg-linear-to-t from-primary-600 to-accent-400;
+    animation: waveform 1.2s ease-in-out infinite;
+  }
+  .waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+  .waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+  .waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+  .waveform-bar:nth-child(5) { animation-delay: 0.4s; }
+  .waveform-bar:nth-child(6) { animation-delay: 0.3s; }
+  .waveform-bar:nth-child(7) { animation-delay: 0.2s; }
+  .waveform-bar:nth-child(8) { animation-delay: 0.1s; }
+
+  .voice-level { @apply h-1 rounded-full bg-linear-to-r from-primary-600 to-accent-500; transition: width 0.1s ease-out; }
+
+  .neon-border {
+    @apply border border-primary/50;
+    box-shadow: 0 0 8px rgba(20, 184, 166, 0.3), inset 0 0 8px rgba(20, 184, 166, 0.05);
+  }
+
+  .status-dot { @apply w-2.5 h-2.5 rounded-full; }
+  .status-dot.online { @apply bg-accent-400; box-shadow: 0 0 6px rgba(52, 211, 153, 0.7); }
+  .status-dot.processing { @apply bg-amber-400 animate-pulse; }
+  .status-dot.offline { @apply bg-muted-foreground; }
+  .status-dot.error { @apply bg-destructive; box-shadow: 0 0 6px rgba(225, 29, 72, 0.6); }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .glass { background: color-mix(in oklab, var(--card) 60%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .messages-scroll { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--primary) 40%, transparent) transparent; }
+}
+
+/* ── Keyframes ── */
+@keyframes waveform { 0%, 100% { height: 4px; opacity: 0.5; } 50% { height: 24px; opacity: 1; } }
+@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+@keyframes glow {
+  0% { box-shadow: 0 0 20px rgba(20, 184, 166, 0.3); }
+  100% { box-shadow: 0 0 40px rgba(20, 184, 166, 0.75), 0 0 80px rgba(16, 185, 129, 0.3); }
+}
+@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes slideInRight { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+@keyframes scaleIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes aurora { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes avatar-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }
+@keyframes avatar-glow {
+  0%, 100% { box-shadow: 0 0 24px rgba(20, 184, 166, 0.25); }
+  50% { box-shadow: 0 0 48px rgba(20, 184, 166, 0.5), 0 0 80px rgba(16, 185, 129, 0.15); }
+}
+@keyframes avatar-blink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.06); } }
+
+.avatar-idle { animation: avatar-breathe 3.8s ease-in-out infinite; }
+.avatar-idle-glow { animation: avatar-glow 3.8s ease-in-out infinite; }
