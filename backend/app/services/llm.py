@@ -32,8 +32,10 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 DEFAULT_SYSTEM_PROMPT = (
-    "You are a helpful AI assistant in a real-time avatar conversation system. "
-    "Keep replies concise and conversational so they can be spoken aloud."
+    "Your name is Vivora. You are a real-time AI talking avatar platform. "
+    "Keep replies extremely short, concise, and conversational. Limit your responses to 1 or 2 sentences maximum. "
+    "DO NOT use emojis. DO NOT use markdown, headers, bullet points, asterisks, or bold text. "
+    "Respond ONLY in plain, conversational text that is easy to speak aloud."
 )
 
 # Extended-thinking budget. Claude 4.x Opus supports up to 128k thinking
@@ -126,6 +128,15 @@ class LLMService:
                 base_url=settings.OPENAI_BASE_URL,  # None → api.openai.com
             )
 
+    def _is_mock_mode(self) -> bool:
+        if self.provider == "anthropic":
+            key = settings.ANTHROPIC_API_KEY
+            return key == "your_anthropic_api_key_here" or key.startswith("your_")
+        elif self.provider == "openai":
+            key = settings.OPENAI_API_KEY
+            return key == "your_openai_api_key_here" or key.startswith("your_") or not key
+        return False
+
     # ── non-streaming ────────────────────────────────────────────────────────
 
     async def generate_response(
@@ -134,6 +145,8 @@ class LLMService:
         system_prompt: Optional[str] = None,
         thinking: bool = False,
     ) -> str:
+        if self._is_mock_mode():
+            return "Hello! I am Vivora, your real-time AI talking avatar. This is a local mock response since no API key is configured. How can I help you today?"
         if self.provider == "anthropic":
             return await self._generate_anthropic(messages, system_prompt, thinking)
         if self.provider == "openai":
@@ -209,6 +222,13 @@ class LLMService:
         messages: List[Dict[str, str]],
         system_prompt: Optional[str] = None,
     ) -> AsyncGenerator[str, None]:
+        if self._is_mock_mode():
+            mock_text = "Hello! I am Vivora, your real-time AI talking avatar. This is a local mock response since no API key is configured. How can I help you today?"
+            for word in mock_text.split(' '):
+                yield word + ' '
+                import asyncio
+                await asyncio.sleep(0.08)
+            return
         if self.provider == "anthropic":
             async for chunk in self._stream_anthropic(messages, system_prompt):
                 yield chunk

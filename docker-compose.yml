@@ -9,7 +9,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:5433:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-avatar_user}"]
       interval: 10s
@@ -63,7 +63,7 @@ services:
       # above) rather than being hardcoded here, so docker-compose.prod.yml's
       # .env.prod real AWS credentials aren't clobbered by a compose-level
       # override (environment: always wins over env_file for the same key).
-      - USE_LOCAL_STORAGE=false
+      - USE_LOCAL_STORAGE=true
       - S3_ENDPOINT_URL=http://minio:9000
       # Dev mode: --reload watches the bind-mounted source below and restarts
       # on file changes — code edits take effect without a rebuild.
@@ -152,7 +152,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/2
-      - USE_LOCAL_STORAGE=false
+      - USE_LOCAL_STORAGE=true
       - S3_ENDPOINT_URL=http://minio:9000
     extra_hosts:
       - "host.docker.internal:host-gateway"

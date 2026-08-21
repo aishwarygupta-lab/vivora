@@ -38,6 +38,18 @@ class SynthResult:
     voice_cloned: bool  # True if a speaker WAV was actually applied
 
 
+import re
+
+def clean_text_for_speech(text: str) -> str:
+    # Remove markdown formatting characters
+    text = re.sub(r'[*_#`\[\]()]', '', text)
+    # Remove emojis (supplementary planes)
+    text = re.sub(r'[\U00010000-\U0010ffff]', '', text)
+    # Remove miscellaneous symbols and dingbats
+    text = re.sub(r'[\u2600-\u27BF]', '', text)
+    # Normalize spacing
+    return re.sub(r'\s+', ' ', text).strip()
+
 # Microsoft neural voices for the Edge TTS fallback, one per supported
 # language (the same 23-language set the voices API allows). Anything not
 # listed falls back to the English voice.
@@ -135,6 +147,7 @@ class TTSService:
             `fallback=True` indicates the preferred Chatterbox path failed
             and gTTS was used instead — voice cloning is lost in that case.
         """
+        text = clean_text_for_speech(text)
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
         try:
@@ -238,6 +251,7 @@ class TTSService:
         language: str = "en",
     ) -> bytes:
         """Synthesize and return WAV bytes (used by REST callers)."""
+        text = clean_text_for_speech(text)
         import tempfile
 
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
