@@ -18,6 +18,7 @@ notify the user when voice cloning was silently dropped during fallback.
 
 import asyncio
 import logging
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -38,7 +39,6 @@ class SynthResult:
     voice_cloned: bool  # True if a speaker WAV was actually applied
 
 
-import re
 
 def clean_text_for_speech(text: str) -> str:
     # Remove markdown formatting characters

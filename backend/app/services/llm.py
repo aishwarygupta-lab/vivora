@@ -21,6 +21,8 @@ appropriate user-facing messages.
 
 from __future__ import annotations
 
+import asyncio
+
 import logging
 from typing import AsyncGenerator, Dict, List, Optional
 
@@ -226,7 +228,6 @@ class LLMService:
             mock_text = "Hello! I am Vivora, your real-time AI talking avatar. This is a local mock response since no API key is configured. How can I help you today?"
             for word in mock_text.split(' '):
                 yield word + ' '
-                import asyncio
                 await asyncio.sleep(0.08)
             return
         if self.provider == "anthropic":
