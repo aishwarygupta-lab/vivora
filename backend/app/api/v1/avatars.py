@@ -191,7 +191,10 @@ async def _create_video_avatar(
         raise
     except Exception as e:
         logger.error(f"Avatar video processing error: {e}")
-        raise HTTPException(status_code=400, detail="Could not process the video. Try a shorter, clearer clip with a visible face.")
+        raise HTTPException(
+            status_code=400,
+            detail="Could not process the video. Try a shorter, clearer clip with a visible face.",
+        )
     finally:
         temp_orig.unlink(missing_ok=True)
         temp_video.unlink(missing_ok=True)

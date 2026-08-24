@@ -164,15 +164,25 @@ class AvatarProcessor:
 
         # 2. Normalise / trim / cap resolution, drop audio.
         norm_cmd = [
-            "ffmpeg", "-y", "-v", "error",
-            "-i", str(input_path),
-            "-t", str(max_sec),
+            "ffmpeg",
+            "-y",
+            "-v",
+            "error",
+            "-i",
+            str(input_path),
+            "-t",
+            str(max_sec),
             "-an",
-            "-r", str(settings.AVATAR_FPS),
-            "-vf", "scale='min(720,iw)':-2",
-            "-c:v", "libx264",
-            "-pix_fmt", "yuv420p",
-            "-crf", "20",
+            "-r",
+            str(settings.AVATAR_FPS),
+            "-vf",
+            "scale='min(720,iw)':-2",
+            "-c:v",
+            "libx264",
+            "-pix_fmt",
+            "yuv420p",
+            "-crf",
+            "20",
             str(out_video_path),
         ]
         res = subprocess.run(norm_cmd, capture_output=True)
@@ -186,10 +196,16 @@ class AvatarProcessor:
         poster_full = str(Path(out_poster_path).with_suffix(".src.png"))
         subprocess.run(
             [
-                "ffmpeg", "-y", "-v", "error",
-                "-ss", f"{ts:.2f}",
-                "-i", str(out_video_path),
-                "-frames:v", "1",
+                "ffmpeg",
+                "-y",
+                "-v",
+                "error",
+                "-ss",
+                f"{ts:.2f}",
+                "-i",
+                str(out_video_path),
+                "-frames:v",
+                "1",
                 poster_full,
             ],
             capture_output=True,
@@ -197,8 +213,17 @@ class AvatarProcessor:
         if not Path(poster_full).is_file():
             # Fall back to the very first frame.
             subprocess.run(
-                ["ffmpeg", "-y", "-v", "error", "-i", str(out_video_path),
-                 "-frames:v", "1", poster_full],
+                [
+                    "ffmpeg",
+                    "-y",
+                    "-v",
+                    "error",
+                    "-i",
+                    str(out_video_path),
+                    "-frames:v",
+                    "1",
+                    poster_full,
+                ],
                 capture_output=True,
             )
 
@@ -231,10 +256,15 @@ class AvatarProcessor:
         try:
             out = subprocess.run(
                 [
-                    "ffprobe", "-v", "error",
-                    "-select_streams", "v:0",
-                    "-show_entries", "stream=width,height:format=duration",
-                    "-of", "json",
+                    "ffprobe",
+                    "-v",
+                    "error",
+                    "-select_streams",
+                    "v:0",
+                    "-show_entries",
+                    "stream=width,height:format=duration",
+                    "-of",
+                    "json",
                     str(path),
                 ],
                 capture_output=True,

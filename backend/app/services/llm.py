@@ -225,8 +225,8 @@ class LLMService:
     ) -> AsyncGenerator[str, None]:
         if self._is_mock_mode():
             mock_text = "Hello! I am Vivora, your real-time AI talking avatar. This is a local mock response since no API key is configured. How can I help you today?"
-            for word in mock_text.split(' '):
-                yield word + ' '
+            for word in mock_text.split(" "):
+                yield word + " "
                 await asyncio.sleep(0.08)
             return
         if self.provider == "anthropic":

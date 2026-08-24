@@ -39,16 +39,16 @@ class SynthResult:
     voice_cloned: bool  # True if a speaker WAV was actually applied
 
 
-
 def clean_text_for_speech(text: str) -> str:
     # Remove markdown formatting characters
-    text = re.sub(r'[*_#`\[\]()]', '', text)
+    text = re.sub(r"[*_#`\[\]()]", "", text)
     # Remove emojis (supplementary planes)
-    text = re.sub(r'[\U00010000-\U0010ffff]', '', text)
+    text = re.sub(r"[\U00010000-\U0010ffff]", "", text)
     # Remove miscellaneous symbols and dingbats
-    text = re.sub(r'[\u2600-\u27BF]', '', text)
+    text = re.sub(r"[\u2600-\u27BF]", "", text)
     # Normalize spacing
-    return re.sub(r'\s+', ' ', text).strip()
+    return re.sub(r"\s+", " ", text).strip()
+
 
 # Microsoft neural voices for the Edge TTS fallback, one per supported
 # language (the same 23-language set the voices API allows). Anything not

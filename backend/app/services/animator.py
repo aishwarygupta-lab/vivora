@@ -282,25 +282,55 @@ class AvatarAnimator:
         if is_video:
             logger.info("Using simple animation (looped source clip + audio, no lip-sync)")
             cmd = [
-                "ffmpeg", "-y",
-                "-stream_loop", "-1", "-i", str(avatar_path),  # loop the clip
-                "-i", str(audio_path),
-                "-map", "0:v:0", "-map", "1:a:0",              # clip video + reply audio
-                "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k",
-                "-pix_fmt", "yuv420p", "-shortest",
-                "-vf", vf,
+                "ffmpeg",
+                "-y",
+                "-stream_loop",
+                "-1",
+                "-i",
+                str(avatar_path),  # loop the clip
+                "-i",
+                str(audio_path),
+                "-map",
+                "0:v:0",
+                "-map",
+                "1:a:0",  # clip video + reply audio
+                "-c:v",
+                "libx264",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "192k",
+                "-pix_fmt",
+                "yuv420p",
+                "-shortest",
+                "-vf",
+                vf,
                 output_path,
             ]
         else:
             logger.info("Using simple animation (static image + audio, no lip-sync)")
             cmd = [
-                "ffmpeg", "-y",
-                "-loop", "1", "-i", str(avatar_path),
-                "-i", str(audio_path),
-                "-c:v", "libx264", "-tune", "stillimage",
-                "-c:a", "aac", "-b:a", "192k",
-                "-pix_fmt", "yuv420p", "-shortest",
-                "-vf", vf,
+                "ffmpeg",
+                "-y",
+                "-loop",
+                "1",
+                "-i",
+                str(avatar_path),
+                "-i",
+                str(audio_path),
+                "-c:v",
+                "libx264",
+                "-tune",
+                "stillimage",
+                "-c:a",
+                "aac",
+                "-b:a",
+                "192k",
+                "-pix_fmt",
+                "yuv420p",
+                "-shortest",
+                "-vf",
+                vf,
                 output_path,
             ]
 
