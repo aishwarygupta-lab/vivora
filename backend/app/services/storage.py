@@ -79,7 +79,6 @@ class S3StorageService:
     def __init__(self):
         import aioboto3
         import boto3
-
         from botocore.config import Config
 
         self.bucket_name = settings.S3_BUCKET_NAME
